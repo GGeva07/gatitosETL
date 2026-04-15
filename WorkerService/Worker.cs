@@ -27,7 +27,6 @@ namespace WorkerService
             {
                 _logger.LogInformation("Worker iniciado - Procesando ETL");
 
-                // Ruta del archivo CSV (puede configurarse en appsettings.json)
                 var csvPath = "data/datos.csv";
 
                 if (!File.Exists(csvPath))
@@ -36,12 +35,10 @@ namespace WorkerService
                     return;
                 }
 
-                // Leer datos del CSV
                 _logger.LogInformation($"Leyendo CSV desde: {csvPath}");
                 var csvData = await _csvReaderService.ReadCsvAsync(csvPath);
                 _logger.LogInformation($"Se leyeron {csvData.Count} registros del CSV");
 
-                // Procesar ETL
                 _logger.LogInformation("Iniciando procesamiento ETL");
                 var etlResult = await _etlService.ProcessEtlAsync(csvData);
 
@@ -63,7 +60,6 @@ namespace WorkerService
                     }
                 }
 
-                // Detener el servicio después de completar
                 _hostApplicationLifetime.StopApplication();
             }
             catch (Exception ex)

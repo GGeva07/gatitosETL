@@ -19,10 +19,8 @@ namespace gatitosEtl.Data.services
                 if (lines.Length < 2)
                     throw new InvalidOperationException("El archivo CSV está vacío o no contiene datos");
 
-                // Leer encabezados
                 var headers = lines[0].Split(',');
 
-                // Mapear índices de columnas
                 var idPersonaIdx = Array.IndexOf(headers, "id_persona");
                 var nombrePersonaIdx = Array.IndexOf(headers, "nombre_persona");
                 var ciudadIdx = Array.IndexOf(headers, "ciudad");
@@ -32,7 +30,6 @@ namespace gatitosEtl.Data.services
                 var tipoIdx = Array.IndexOf(headers, "tipo");
                 var fechaIdx = Array.IndexOf(headers, "fecha");
 
-                // Procesar datos
                 for (int i = 1; i < lines.Length; i++)
                 {
                     var values = ParseCsvLine(lines[i]);

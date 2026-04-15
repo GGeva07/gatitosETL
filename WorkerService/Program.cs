@@ -14,21 +14,17 @@ var host = Host.CreateDefaultBuilder(args)
                       ?? throw new InvalidOperationException(
                              "Falta 'ConnectionStrings:DWH' en appsettings.json");
 
-        // Registrar DbContext
         services.AddDbContext<DbGatitosContext>(options =>
             options.UseSqlServer(connStr));
 
-        // Registrar Repositorios
         services.AddScoped<ICiudadRepository, CiudadRepository>();
         services.AddScoped<IPersonaRepository, PersonaRepository>();
         services.AddScoped<IGatoRepository, GatoRepository>();
         services.AddScoped<IFechaRepository, FechaRepository>();
 
-        // Registrar Servicios
         services.AddScoped<ICsvReaderService, CsvReaderService>();
         services.AddScoped<IEtlService, EtlService>();
 
-        // Registrar Worker
         services.AddHostedService<Worker>();
     })
     .Build();
