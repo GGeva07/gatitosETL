@@ -22,8 +22,8 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddScoped<IGatoRepository, GatoRepository>();
         services.AddScoped<IFechaRepository, FechaRepository>();
 
-        services.AddScoped<ICsvReaderService, CsvReaderService>();
-        services.AddScoped<IEtlService, EtlService>();
+        services.AddSingleton<ICsvReaderService, CsvReaderService>();
+        services.AddScoped<IEtlService, EtlService>(); // Cambiar de AddSingleton a AddScoped
 
         services.AddHostedService<Worker>();
     })

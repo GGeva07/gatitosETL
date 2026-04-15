@@ -103,23 +103,22 @@ namespace gatitosEtl.Data.services
                     if (!int.TryParse(persona.IdPersona, out var idPersona))
                         throw new InvalidOperationException($"Id de persona inválido: {persona.IdPersona}");
 
-                    var personaExistente = await _personaRepository.GetByIdAsync(idPersona);
+                     var personaExistente = await _personaRepository.FindAsync(p => p.nombre == persona.Nombre);
 
-                    if (personaExistente == null)
-                    {
-                        var ciudades = await _ciudadRepository.FindAsync(c => c.nombre == persona.Ciudad);
-                        var idCiudad = ciudades.FirstOrDefault()?.id_ciudad ?? 1;
+                     if (!personaExistente.Any())
+                     {
+                         var ciudades = await _ciudadRepository.FindAsync(c => c.nombre == persona.Ciudad);
+                         var idCiudad = ciudades.FirstOrDefault()?.id_ciudad ?? 1;
 
-                        var dimPersona = new DimPersona
-                        {
-                            id_persona = idPersona,
-                            nombre = persona.Nombre!,
-                            idCiudad = idCiudad
-                        };
+                         var dimPersona = new DimPersona
+                         {
+                             nombre = persona.Nombre!,
+                             idCiudad = idCiudad
+                         };
 
-                        await _personaRepository.AddAsync(dimPersona);
-                        procesadas++;
-                    }
+                         await _personaRepository.AddAsync(dimPersona);
+                         procesadas++;
+                     }
                 }
                 catch (Exception ex)
                 {
@@ -147,21 +146,20 @@ namespace gatitosEtl.Data.services
                     if (!int.TryParse(gato.IdGato, out var idGato))
                         throw new InvalidOperationException($"Id de gato inválido: {gato.IdGato}");
 
-                    var gatoExistente = await _gatoRepository.GetByIdAsync(idGato);
+                     var gatoExistente = await _gatoRepository.FindAsync(g => g.nombre == gato.NombreGato);
 
-                    if (gatoExistente == null)
-                    {
-                        var dimGato = new DimGato
-                        {
-                            id_gato = idGato,
-                            nombre = gato.NombreGato!,
-                            raza = gato.Raza ?? "Desconocida",
-                            tipo = gato.Tipo ?? "Desconocido"
-                        };
+                     if (!gatoExistente.Any())
+                     {
+                         var dimGato = new DimGato
+                         {
+                             nombre = gato.NombreGato!,
+                             raza = gato.Raza ?? "Desconocida",
+                             tipo = gato.Tipo ?? "Desconocido"
+                         };
 
-                        await _gatoRepository.AddAsync(dimGato);
-                        procesados++;
-                    }
+                         await _gatoRepository.AddAsync(dimGato);
+                         procesados++;
+                     }
                 }
                 catch (Exception ex)
                 {

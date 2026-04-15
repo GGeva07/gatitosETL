@@ -6,18 +6,18 @@ namespace WorkerService
     {
         private readonly ILogger<Worker> _logger;
         private readonly ICsvReaderService _csvReaderService;
-        private readonly IEtlService _etlService;
+        private readonly IServiceProvider _serviceProvider;
         private readonly IHostApplicationLifetime _hostApplicationLifetime;
 
         public Worker(
             ILogger<Worker> logger,
             ICsvReaderService csvReaderService,
-            IEtlService etlService,
+            IServiceProvider serviceProvider,
             IHostApplicationLifetime hostApplicationLifetime)
         {
             _logger = logger;
             _csvReaderService = csvReaderService;
-            _etlService = etlService;
+            _serviceProvider = serviceProvider;
             _hostApplicationLifetime = hostApplicationLifetime;
         }
 
@@ -40,23 +40,28 @@ namespace WorkerService
                 _logger.LogInformation($"Se leyeron {csvData.Count} registros del CSV");
 
                 _logger.LogInformation("Iniciando procesamiento ETL");
-                var etlResult = await _etlService.ProcessEtlAsync(csvData);
+                
+                using (var scope = _serviceProvider.CreateScope())
+                {
+                    var etlService = scope.ServiceProvider.GetRequiredService<IEtlService>();
+                    var etlResult = await etlService.ProcessEtlAsync(csvData);
 
-                if (etlResult.Success)
-                {
-                    _logger.LogInformation(
-                        $"ETL completado exitosamente: " +
-                        $"Ciudades={etlResult.CiudadesProcessadas}, " +
-                        $"Personas={etlResult.PersonasProcessadas}, " +
-                        $"Gatos={etlResult.GatosProcessados}, " +
-                        $"Fechas={etlResult.FechasProcessadas}");
-                }
-                else
-                {
-                    _logger.LogError($"Error en ETL: {etlResult.Mensaje}");
-                    foreach (var error in etlResult.Errores)
+                    if (etlResult.Success)
                     {
-                        _logger.LogError(error);
+                        _logger.LogInformation(
+                            $"ETL completado exitosamente: " +
+                            $"Ciudades={etlResult.CiudadesProcessadas}, " +
+                            $"Personas={etlResult.PersonasProcessadas}, " +
+                            $"Gatos={etlResult.GatosProcessados}, " +
+                            $"Fechas={etlResult.FechasProcessadas}");
+                    }
+                    else
+                    {
+                        _logger.LogError($"Error en ETL: {etlResult.Mensaje}");
+                        foreach (var error in etlResult.Errores)
+                        {
+                            _logger.LogError(error);
+                        }
                     }
                 }
 
