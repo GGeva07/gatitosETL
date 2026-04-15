@@ -29,16 +29,12 @@ namespace gatitosEtl.Data.services
 
             try
             {
-                // Procesar ciudades primero (dependencia para personas)
                 result.CiudadesProcessadas = await ProcessCiudadesAsync(csvData);
 
-                // Procesar personas
                 result.PersonasProcessadas = await ProcessPersonasAsync(csvData);
 
-                // Procesar gatos
                 result.GatosProcessados = await ProcessGatosAsync(csvData);
 
-                // Procesar fechas
                 result.FechasProcessadas = await ProcessFechasAsync(csvData);
 
                 result.Success = true;
@@ -111,7 +107,6 @@ namespace gatitosEtl.Data.services
 
                     if (personaExistente == null)
                     {
-                        // Obtener la ciudad
                         var ciudades = await _ciudadRepository.FindAsync(c => c.nombre == persona.Ciudad);
                         var idCiudad = ciudades.FirstOrDefault()?.id_ciudad ?? 1;
 
