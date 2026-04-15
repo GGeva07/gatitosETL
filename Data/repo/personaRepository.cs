@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using gatitosEtl.Data.context;
+using gatitosEtl.Data.interfaces;
+using gatitosEtl.Models.DIMS;
 
 namespace gatitosEtl.Data.repo
 {
-    internal class personaRepository
+
+    public class PersonaRepository : GenericRepository<DimPersona>, IPersonaRepository
     {
+        public PersonaRepository(DbGatitosContext context) : base(context)
+        {
+        }
     }
 }

@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace gatitosEtl.Models.DIMS
+﻿namespace gatitosEtl.Models.DIMS
 {
-    internal class dimPersona
+    public class DimPersona
     {
+        public int id_persona { get; set; }
+        public string nombre { get; set; } = string.Empty;
+        public int idCiudad { get; set; }
     }
 }

@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using gatitosEtl.Data.context;
+using gatitosEtl.Data.interfaces;
+using gatitosEtl.Models.DIMS;
 
 namespace gatitosEtl.Data.repo
 {
-    internal class fechaRepository
+    public class FechaRepository (DbGatitosContext context) 
+    : GenericRepository<DimFecha> (context), IFechaRepository
     {
     }
 }

@@ -1,0 +1,6 @@
+id_persona,nombre_persona,ciudad,id_gato,nombre_gato,raza,tipo,fecha
+1,Juan Pérez,Madrid,101,Whiskers,Persa,Doméstico,2024-01-15
+2,María García,Barcelona,102,Fluffy,Siamés,Doméstico,2024-02-20
+3,Carlos López,Valencia,103,Mittens,Gato Común,Doméstico,2024-03-10
+4,Ana Martínez,Sevilla,104,Shadow,Británico,Doméstico,2024-04-05
+5,Pedro Rodríguez,Bilbao,105,Tigger,Atigrado,Doméstico,2024-05-12
