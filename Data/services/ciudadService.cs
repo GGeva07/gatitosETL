@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace gatitosEtl.Models.Gato
+namespace gatitosEtl.Data.services
 {
-    internal class gatoModel
+    internal class ciudadService
     {
     }
 }

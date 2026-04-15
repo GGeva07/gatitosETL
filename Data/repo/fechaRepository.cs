@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace gatitosEtl.Data.csvDataAccess
+namespace gatitosEtl.Data.repo
 {
-    internal class personaData
+    internal class fechaRepository
     {
     }
 }

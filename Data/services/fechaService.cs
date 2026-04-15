@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace gatitosEtl.Data.csvDataAccess
+namespace gatitosEtl.Data.services
 {
-    internal class fechaData
+    internal class fechaService
     {
     }
 }
